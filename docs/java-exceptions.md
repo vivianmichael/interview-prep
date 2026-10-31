@@ -1,7 +1,5 @@
 # Java Exceptions
 
-## Core Java
-
 ### What is the difference between checked and unchecked exceptions?
 
 Java exceptions are commonly divided into checked and unchecked exceptions.
