@@ -29,6 +29,11 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Java & Spring Boot: java-spring.md
+  - Java:
+      - Overview: java.md
+      - Exceptions: java-exceptions.md
+      - Concurrency: java-concurrency.md
+      - Garbage Collection: java-gc.md
+  - Spring (Boot): spring.md
   - System Design: system-design.md
   - DSA: dsa.md
