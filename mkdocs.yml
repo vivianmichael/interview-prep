@@ -1,0 +1,29 @@
+site_name: Interview Prep Question Bank
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details        # collapsible answers
+  - pymdownx.superfences    # code blocks inside answers
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Java & Spring Boot: java-spring.md
+  - System Design: system-design.md
+  - DSA: dsa.md
