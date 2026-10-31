@@ -1,4 +1,3 @@
-
 # Java & Spring Boot
 
 ## Core Java
@@ -13,10 +12,13 @@ of locking the entire map.
 
 It also disallows null keys and values.
 
-**Follow-up questions:**
+<details markdown="1">
+<summary>Follow-up questions</summary>
 
 - How does HashMap handle collisions?
 - What happens during resize?
+
+</details>
 
 ---
 
@@ -34,7 +36,12 @@ configuration classes listed in:
 Each configuration is guarded by conditions such as
 `@ConditionalOnClass` and `@ConditionalOnMissingBean`.
 
-**Follow-up questions:**
+<details markdown="1">
+<summary>Follow-up questions</summary>
 
 - How do you exclude a specific auto-configuration?
 - What does `@ConditionalOnMissingBean` let you do?
+
+</details>
+
+---

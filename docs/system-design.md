@@ -1,4 +1,3 @@
-
 # System Design
 
 ## Kafka
@@ -41,11 +40,14 @@ before an earlier failed batch.
 - Process sequentially per partition, or hand off processing by key.
 - Increasing the partition count can change key-to-partition mapping.
 
-**Follow-up questions:**
+<details markdown="1">
+<summary>Follow-up questions</summary>
 
 - What happens if you add partitions to an existing topic?
 - What is an idempotent producer and how does it prevent duplicates?
 - How do you get ordering and high throughput together?
+
+</details>
 
 ---
 
@@ -97,10 +99,12 @@ Maximum useful active consumers per group = number of partitions.
 - Each group tracks its own offsets.
 - A slow or unavailable service doesn't block other groups.
 - Use appropriate `retention.ms` so a service can catch up after downtime.
-- A new group can replay from the beginning using
-  `auto.offset.reset=earliest`.
+- A new group can replay from the beginning using `auto.offset.reset=earliest`.
 
-**Follow-up questions:**
+<details markdown="1">
+<summary>Follow-up questions</summary>
 
 - What happens if two services accidentally use the same `group.id`?
 - How does a consumer group rebalance work?
+
+</details>
