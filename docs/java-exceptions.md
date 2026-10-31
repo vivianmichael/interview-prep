@@ -2,8 +2,6 @@
 
 ### What is the difference between checked and unchecked exceptions?
 
-Java exceptions are commonly divided into checked and unchecked exceptions.
-
 - **Checked exceptions:** Checked by the compiler. A method must catch them or declare them using `throws`.
 - **Unchecked exceptions:** Subclasses of `RuntimeException`. The compiler does not require callers to catch or declare them.
 - **`Error`:** Also unchecked, but represents serious JVM or environment problems that application code generally should not try to recover from.
@@ -17,11 +15,29 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+// Unchecked domain exception: callers are not forced to catch it.
+public class SettlementFileUnavailableException extends RuntimeException {
+    public SettlementFileUnavailableException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+
 public class SettlementFileReader {
 
-    // IOException is checked, so it is declared.
-    public String read(Path path) throws IOException {
+    // Option 1: IOException is checked, so the method declares it.
+    // The compiler forces every caller to handle it.
+    public String readRaw(Path path) throws IOException {
         return Files.readString(path);
+    }
+
+    // Option 2: translate the checked IOException at the boundary into
+    // an unchecked domain exception, preserving the cause.
+    public String read(Path path) {
+        try {
+            return Files.readString(path);
+        } catch (IOException e) {
+            throw new SettlementFileUnavailableException("Cannot read " + path, e);
+        }
     }
 
     // IllegalArgumentException is unchecked.
@@ -505,3 +521,47 @@ public Payment authorize(PaymentRequest request) {
 ```
 
 **Real-world production usage:** For financial operations, distinguish a definitive decline from an unknown outcome. A decline is a known business result. A timeout may mean the gateway did not respond even though it processed the request. The latter requires idempotency and status reconciliation—not an automatic assumption that the payment failed.
+
+# Java Exception Hierarchy
+
+```text
+Object
+  |
+  +-- Throwable
+       |
+       +-- Error
+       |    +-- OutOfMemoryError
+       |    +-- StackOverflowError
+       |    +-- AssertionError
+       |    +-- NoClassDefFoundError
+       |
+       +-- Exception
+            |
+            +-- Checked Exceptions
+            |    +-- ClassNotFoundException
+            |    +-- CloneNotSupportedException
+            |    +-- IllegalAccessException
+            |    +-- InstantiationException
+            |    +-- InterruptedException
+            |    +-- NoSuchFieldException
+            |    +-- NoSuchMethodException
+            |
+            +-- RuntimeException
+                 |
+                 +-- ArithmeticException
+                 +-- ArrayStoreException
+                 +-- ClassCastException
+                 +-- IllegalArgumentException
+                 |    +-- NumberFormatException
+                 |    +-- IllegalThreadStateException
+                 |
+                 +-- IllegalMonitorStateException
+                 +-- IllegalStateException
+                 +-- IndexOutOfBoundsException
+                 |    +-- ArrayIndexOutOfBoundsException
+                 |    +-- StringIndexOutOfBoundsException
+                 |
+                 +-- NegativeArraySizeException
+                 +-- NullPointerException
+                 +-- SecurityException
+```
