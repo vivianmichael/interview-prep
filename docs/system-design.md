@@ -17,7 +17,6 @@ The process is straightforward:
 5. Validate downstream dependencies such as databases and external services.
 
 ---
-
 ### 1. Understand the Incoming Traffic
 
 Before estimating server count, you must understand the workload.
@@ -50,6 +49,7 @@ Requests per hour:
 ```text
 1,000 × 3,600 = 3,600,000
 ```
+
 ---
 #### Average Traffic vs Peak Traffic
 
