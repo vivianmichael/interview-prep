@@ -1,23 +1,22 @@
+
 # System Design
 
-## Kafka
+## FAQ's
 
 ### How do you guarantee message ordering in Kafka?
-
-**Key point:**
 
 Kafka guarantees ordering only **within a single partition**, never across
 partitions of a topic.
 
 **Approaches:**
 
-1. **Use a message key (preferred).**
+**Use a message key (preferred).**
 
    Messages with the same key always go to the same partition
    (`hash(key) % numPartitions`), preserving ordering per key
    (e.g. `orderId` or `userId`) while allowing the topic to scale.
 
-2. **Use a single partition.**
+**Use a single partition.**
 
    This guarantees total ordering for the topic, but only one consumer
    in a consumer group can read it. Throughput and scalability are limited.
