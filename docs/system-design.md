@@ -2,8 +2,6 @@
 
 ## Capacity Planning: Turning Demand into a Server Count
 
-### Overview
-
 One of the most common system design interview questions is:
 
 > "Our application receives 10,000 requests per second. How many servers do we need?"
@@ -52,30 +50,23 @@ Requests per hour:
 ```text
 1,000 × 3,600 = 3,600,000
 ```
-
 ---
-
 #### Average Traffic vs Peak Traffic
 
 Suppose your application receives:
-
 ```text
 8,640,000 requests/day
 ```
-
 Average RPS:
-
 ```text
 8,640,000 / 86,400 = 100 RPS
 ```
 
 However:
-
 ```text
 Average RPS = 100
 Peak RPS = 800
 ```
-
 If you size your infrastructure for 100 RPS, your application may fail during business-hour spikes.
 
 #### Capacity Planning Focus
@@ -89,9 +80,7 @@ Always plan for:
 - Read-heavy vs write-heavy workloads
 
 **Peak traffic determines infrastructure sizing, not daily averages.**
-
 ---
-
 ### 2. Understand Server Capacity
 
 The next question is:
@@ -111,9 +100,7 @@ Capacity depends on:
 - Garbage collection
 - Payload size
 - Business logic complexity
-
 ---
-
 #### Example: Two Endpoints, Different Cost
 
 #### Read Endpoint
@@ -135,7 +122,6 @@ public Payment createPayment(
     return paymentService.createPayment(request);
 }
 ```
-
 The second endpoint might:
 
 - Validate input
@@ -145,9 +131,7 @@ The second endpoint might:
 - Write audit logs
 
 Both endpoints are requests, but they consume very different amounts of resources.
-
 ---
-
 #### Measured Capacity Matters
 
 Suppose load testing produces:
