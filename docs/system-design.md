@@ -59,7 +59,7 @@ Suppose your application receives:
 ```
 Average RPS:
 ```text
-8,640,000 / 86,400 = 100 RPS
+8,640,000 / 86,400 (seconds in a day) = 100 RPS
 ```
 
 However:
@@ -79,7 +79,8 @@ Always plan for:
 - Traffic spike patterns
 - Read-heavy vs write-heavy workloads
 
-**Peak traffic determines infrastructure sizing, not daily averages.**
+Peak traffic determines the final infrastructure sizing, not daily averages.**
+
 ---
 ### 2. Understand Server Capacity
 
@@ -91,16 +92,16 @@ There is no universal answer.
 
 Capacity depends on:
 
-- CPU cores
-- Available memory
+- CPU cores and RAM
 - Database latency
 - External API latency
-- Thread pools
-- Connection pools
+- Thread pools & Connection pools
 - Garbage collection
 - Payload size
 - Business logic complexity
+
 ---
+
 #### Example: Two Endpoints, Different Cost
 
 #### Read Endpoint
@@ -124,14 +125,12 @@ public Payment createPayment(
 ```
 The second endpoint might:
 
-- Validate input
-- Write to DB
-- Publish Kafka event
-- Call payment gateway
-- Write audit logs
+- Validate input +  Write to DB + Publish Kafka event + Call payment gateway + Write audit logs
 
 Both endpoints are requests, but they consume very different amounts of resources.
+
 ---
+
 #### Measured Capacity Matters
 
 Suppose load testing produces:
@@ -159,7 +158,6 @@ Capacity should come from:
 - Load testing
 - Benchmarking
 - Production monitoring
-
 Not from CPU count alone.
 
 ---
@@ -181,11 +179,7 @@ Assume:
 Formula:
 
 ```text
-Usable Capacity
-=
-Measured Capacity
-×
-Target Utilization
+Usable Capacity  =  Measured Capacity × Target Utilization
 ```
 
 Example:
@@ -219,15 +213,11 @@ Because:
 Formula:
 
 ```text
-Servers Required
-=
-Peak RPS / Usable Capacity
+Servers Required = Peak RPS / Usable Capacity
 ```
 
 ```text
-10,000 / 560
-=
-17.86
+10,000 / 560 = 17.86
 ```
 
 Round up:
@@ -239,9 +229,7 @@ Round up:
 #### Verification
 
 ```text
-18 × 560
-=
-10,080 RPS
+18 × 560 = 10,080 RPS
 ```
 
 The system can handle the target load.
@@ -251,24 +239,14 @@ The system can handle the target load.
 ### Core Capacity Planning Formula
 
 ```text
-Servers Required =
-ceil(
-    Peak RPS
-    /
-    (Measured RPS per Server × Utilization Target)
+Servers Required = ceil( Peak RPS / (Measured RPS per Server × Utilization Target)
 )
 ```
 
 Example:
 
 ```text
-ceil(
-    10,000
-    /
-    (800 × 0.70)
-)
-=
-18
+ceil(10,000 / (800 × 0.70)) = 18
 ```
 
 ---
@@ -280,17 +258,13 @@ A production system must survive failures.
 Suppose:
 
 ```text
-18 servers
+18 servers are deployed.
 ```
-
-are deployed.
 
 If one server dies:
 
 ```text
-17 × 560
-=
-9,520 RPS
+17 × 560 = 9,520 RPS
 ```
 
 Remaining capacity:
@@ -320,9 +294,7 @@ The system is under-provisioned.
 Requirement:
 
 ```text
-(N - 1) × 560
->=
-10,000
+(N - 1) × 560 >= 10,000
 ```
 
 Calculation:
@@ -354,11 +326,8 @@ Round up:
 Definition:
 
 ```text
-Minimum Required Capacity
-+
-One Additional Server
+Minimum Required Capacity + One Additional Server
 ```
-
 This ensures that losing one instance does not impact customers.
 
 ---
@@ -388,17 +357,13 @@ If Zone A fails:
 Capacity:
 
 ```text
-12 × 560
-=
-6,720 RPS
+12 × 560 = 6,720 RPS
 ```
 
 Required:
-
 ```text
 10,000 RPS
 ```
-
 Not enough.
 
 #### Lesson
@@ -457,17 +422,13 @@ Traffic:
 Response Time:
 
 ```text
-100 ms
-=
-0.1 sec
+100 ms = 0.1 sec
 ```
 
 Calculation:
 
 ```text
-1,000 × 0.1
-=
-100
+1,000 × 0.1 = 100
 ```
 
 Concurrency:
@@ -489,17 +450,13 @@ Traffic:
 Response Time:
 
 ```text
-500 ms
-=
-0.5 sec
+500 ms = 0.5 sec
 ```
 
 Calculation:
 
 ```text
-1,000 × 0.5
-=
-500
+1,000 × 0.5 = 500
 ```
 
 Concurrency:
@@ -583,9 +540,7 @@ Requirements:
 #### Step 1: Calculate Usable Capacity
 
 ```text
-1,000 × 0.70
-=
-700 RPS
+1,000 × 0.70 = 700 RPS
 ```
 
 ---
@@ -593,9 +548,7 @@ Requirements:
 #### Step 2: Calculate Minimum Instances
 
 ```text
-12,000 / 700
-=
-17.14
+12,000 / 700 = 17.14
 ```
 
 Round up:
@@ -611,9 +564,7 @@ Round up:
 To survive one instance loss:
 
 ```text
-18 + 1
-=
-19 instances
+18 + 1 = 19 instances
 ```
 
 ---
@@ -623,17 +574,13 @@ To survive one instance loss:
 Normal:
 
 ```text
-19 × 700
-=
-13,300 RPS
+19 × 700 = 13,300 RPS
 ```
 
 One instance down:
 
 ```text
-18 × 700
-=
-12,600 RPS
+18 × 700 = 12,600 RPS
 ```
 
 Still above target:
@@ -728,26 +675,19 @@ Measured Capacity × Utilization Target
 #### Server Count
 
 ```text
-Servers Required =
-ceil(
-    Peak RPS
-    /
-    Usable Capacity
-)
+Servers Required = ceil( Peak RPS / Usable Capacity)
 ```
 
 #### Concurrency (Little's Law)
 
 ```text
-Concurrency =
-RPS × Response Time (seconds)
+Concurrency = RPS × Response Time (seconds)
 ```
 
 #### N+1 Planning
 
 ```text
-(N - 1) × Usable Capacity
->= Peak Demand
+(N - 1) × Usable Capacity >= Peak Demand
 ```
 
 Always verify that the entire request path (application, database, cache, queues, and downstream services) can sustain the calculated load.
@@ -929,3 +869,5 @@ Maximum useful active consumers per group = number of partitions.
 - How does a consumer group rebalance work?
 
 </details>
+
+---

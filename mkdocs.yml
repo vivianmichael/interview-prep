@@ -35,4 +35,5 @@ nav:
       - Java garbage collection: java-gc.md
   - Spring (Boot): spring.md
   - System Design: system-design.md
+      - System Design CheatSheet : system-design-cheatsheet.md
   - DSA: dsa.md
