@@ -35,6 +35,7 @@ nav:
       - Java garbage collection: java-gc.md
   - Spring (Boot): spring.md
   - System Design:
-      - Overview: system-design.md
+      - Capacity Planning: capacity-planning.md
+      - System Design FAQs: system-design-faq.md
       - System Design Cheat Sheet: system-design-cheatsheet.md
   - DSA: dsa.md
