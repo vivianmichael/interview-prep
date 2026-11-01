@@ -34,6 +34,7 @@ nav:
       - Java concurrency: java-concurrency.md
       - Java garbage collection: java-gc.md
   - Spring (Boot): spring.md
-  - System Design: system-design.md
-      - System Design CheatSheet : system-design-cheatsheet.md
+  - System Design:
+      - Overview: system-design.md
+      - System Design Cheat Sheet: system-design-cheatsheet.md
   - DSA: dsa.md
