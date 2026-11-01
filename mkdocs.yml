@@ -38,4 +38,6 @@ nav:
       - Capacity Planning: capacity-planning.md
       - System Design FAQs: system-design-faq.md
       - System Design Cheat Sheet: system-design-cheatsheet.md
-  - DSA: dsa.md
+  - DSA:
+      - Overview: dsa.md
+      - Linked Lists: linkedin-list.md
