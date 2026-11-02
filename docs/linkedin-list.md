@@ -244,6 +244,9 @@ return the copy of the head
 ### Code
 
 ```java
+import java.util.HashMap;
+import java.util.Map;
+
 class RandomNode {
     int val;
     RandomNode next;
@@ -357,25 +360,29 @@ if over capacity: remove the least recently used entry
 ### Code
 
 ```java
-class LRUCache extends LinkedHashMap<Integer, Integer> {
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+class LRUCache {
     private final int capacity;
+    private final LinkedHashMap<Integer, Integer> cache;
 
     LRUCache(int capacity) {
-        super(capacity, 0.75f, true);
         this.capacity = capacity;
+        this.cache = new LinkedHashMap<Integer, Integer>(capacity, 0.75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
+                return size() > LRUCache.this.capacity;
+            }
+        };
     }
 
-    int getValue(int key) {
-        return getOrDefault(key, -1);
+    int get(int key) {
+        return cache.getOrDefault(key, -1);
     }
 
-    void putValue(int key, int value) {
-        put(key, value);
-    }
-
-    @Override
-    protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
-        return size() > capacity;
+    void put(int key, int value) {
+        cache.put(key, value);
     }
 }
 ```
